@@ -1,4 +1,4 @@
-package com.wykorijnsburger.cineville.backend.config
+package com.wykorijnsburger.movietimes.backend.config
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.ComponentScan

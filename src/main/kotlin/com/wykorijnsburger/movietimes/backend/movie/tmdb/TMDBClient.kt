@@ -1,7 +1,7 @@
-package com.wykorijnsburger.cineville.backend.movie.tmdb
+package com.wykorijnsburger.movietimes.backend.movie.tmdb
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import com.wykorijnsburger.cineville.backend.config.APIKeysSupplier
+import com.wykorijnsburger.movietimes.backend.config.APIKeysSupplier
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

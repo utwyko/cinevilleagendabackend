@@ -1,4 +1,4 @@
-package com.wykorijnsburger.cineville.backend.movie.tmdb
+package com.wykorijnsburger.movietimes.backend.movie.tmdb
 
 import io.reactivex.Observable
 import retrofit2.Call

@@ -1,11 +1,11 @@
-package com.wykorijnsburger.cineville.backend
+package com.wykorijnsburger.movietimes.backend
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-open class CinevilleBackendApplication
+open class MovietimesBackendApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(CinevilleBackendApplication::class.java, *args)
+    SpringApplication.run(MovietimesBackendApplication::class.java, *args)
 }

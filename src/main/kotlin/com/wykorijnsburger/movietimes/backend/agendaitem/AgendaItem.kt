@@ -1,4 +1,4 @@
-package com.wykorijnsburger.cineville.backend.agendaitem
+package com.wykorijnsburger.movietimes.backend.agendaitem
 
 import java.util.*
 
