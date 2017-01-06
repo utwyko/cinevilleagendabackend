@@ -1,4 +1,4 @@
-package com.wykorijnsburger.movietimes.backend.movie.tmdb
+package com.wykorijnsburger.movietimes.backend.client.tmdb
 
 import reactor.core.publisher.Flux
 import retrofit2.Call

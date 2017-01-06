@@ -1,4 +1,4 @@
-package com.wykorijnsburger.movietimes.backend.movie.tmdb
+package com.wykorijnsburger.movietimes.backend.client.tmdb
 
 import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
 import com.wykorijnsburger.movietimes.backend.config.APIKeysSupplier
