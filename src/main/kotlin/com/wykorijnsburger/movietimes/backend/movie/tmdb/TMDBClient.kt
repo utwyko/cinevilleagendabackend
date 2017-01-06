@@ -1,6 +1,6 @@
 package com.wykorijnsburger.movietimes.backend.movie.tmdb
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
 import com.wykorijnsburger.movietimes.backend.config.APIKeysSupplier
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
@@ -13,7 +13,7 @@ open class TMDBClient(val apiKeysSupplier: APIKeysSupplier) {
     init {
         val retrofit = Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(ReactorCallAdapterFactory.create())
                 .baseUrl("https://api.themoviedb.org/3/")
                 .build()
 
@@ -22,7 +22,7 @@ open class TMDBClient(val apiKeysSupplier: APIKeysSupplier) {
 
     fun searchMovie(query: String): TMDBSearchResult? {
         println("apiKeysSupplier = ${apiKeysSupplier.tmdb()}")
-        return TMDBAPI.searchMovies(query, apiKey = apiKeysSupplier.tmdb()).blockingFirst()
+        return TMDBAPI.searchMovies(query, apiKey = apiKeysSupplier.tmdb()).blockFirst()
 
     }
 }

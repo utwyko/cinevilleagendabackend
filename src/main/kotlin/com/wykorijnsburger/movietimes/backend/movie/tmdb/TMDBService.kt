@@ -1,12 +1,11 @@
 package com.wykorijnsburger.movietimes.backend.movie.tmdb
 
-import io.reactivex.Observable
+import reactor.core.publisher.Flux
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 interface TMDBService {
     @GET("search/movie")
-    fun searchMovies(@Query("query") query: String, @Query("api_key") apiKey: String): Observable<TMDBSearchResult>
+    fun searchMovies(@Query("query") query: String, @Query("api_key") apiKey: String): Flux<TMDBSearchResult>
 }

@@ -1,6 +1,6 @@
 package com.wykorijnsburger.movietimes.backend.client
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
 import com.wykorijnsburger.movietimes.backend.config.APIKeysSupplier
 import okhttp3.OkHttpClient
 import org.springframework.stereotype.Component
@@ -10,15 +10,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 
 @Component
-open class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
+class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
     private val cinevilleService: CinevilleService
 
     init {
         val okHttp = OkHttpClient.Builder()
                 .addInterceptor {
                     val original = it.request()
-
-                    println(apiKeysSupplier.cineville())
 
                     val toBeEncoded = apiKeysSupplier.cineville() + ":" + apiKeysSupplier.cineville()
                     val encodedAuthKey = Base64Utils.encodeToString(toBeEncoded.toByteArray())
@@ -32,7 +30,7 @@ open class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
         val retrofit = Retrofit.Builder()
                 .client(okHttp)
                 .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(ReactorCallAdapterFactory.create())
                 .baseUrl("http://api.cineville.nl/3/")
                 .build()
 
@@ -40,6 +38,6 @@ open class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
     }
 
     fun getShows(limit: Int): List<Show> {
-        return cinevilleService.getShows(limit).blockingFirst()
+        return cinevilleService.getShows(limit).block()
     }
 }

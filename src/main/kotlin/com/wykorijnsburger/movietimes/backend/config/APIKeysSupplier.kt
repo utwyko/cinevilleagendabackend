@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "apikey")
-open class APIKeysSupplier() {
+class APIKeysSupplier() {
 
-    private var tmdb: String
-    private var cineville: String
+    private var tmdb: String = ""
+    private var cineville: String = ""
 
     fun tmdb(): String {
         return this.tmdb

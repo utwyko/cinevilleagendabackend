@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Component
-open class AgendaItemController(val tmdbClient: TMDBClient, val cinevilleClient: CinevilleClient) {
+class AgendaItemController(val tmdbClient: TMDBClient, val cinevilleClient: CinevilleClient) {
 
     @GetMapping("/app/v1/agendaitems")
     fun getAgendaItems(): List<Show> {
