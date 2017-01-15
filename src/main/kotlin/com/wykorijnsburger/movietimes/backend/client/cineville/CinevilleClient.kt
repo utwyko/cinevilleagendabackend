@@ -11,10 +11,11 @@ import reactor.core.publisher.Flux
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import toFlux
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Component
-class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
+class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
     private val cinevilleService: CinevilleService
 
     init {
@@ -33,8 +34,19 @@ class CinevilleClient(val apiKeysSupplier: APIKeysSupplier) {
         cinevilleService = retrofit.create(CinevilleService::class.java)
     }
 
-    fun getShowTimes(limit: Int): Flux<CinevilleShowtime> {
-        return cinevilleService.getShowtimes(limit).flatMap { it.toFlux() }
+    fun getShowtimes(limit: Int = 10, startDate: LocalDateTime, endDate: LocalDateTime): Flux<CinevilleShowtime> {
+
+        val formattedStartDate = startDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val formattedEndDate = endDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val query = "showtime:[$formattedStartDate TO $formattedEndDate]";
+
+        return cinevilleService.getShowtimes(limit = limit, query = query)
+                .flatMap { it.toFlux() }
+    }
+
+    fun getFilms(ids: Set<String>): Flux<CinevilleFilm> {
+        val idQuery = '(' + ids.joinToString("+OR+") + ')'
+        return cinevilleService.getFilms("id:" + idQuery, ids.size).flatMap { it.toFlux() }
     }
 
     private fun addApikeyInterceptor(it: Interceptor.Chain): Response? {

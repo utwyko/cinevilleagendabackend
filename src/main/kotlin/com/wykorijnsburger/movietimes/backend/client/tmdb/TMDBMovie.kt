@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class TMDBMovie(
         @Json(name = "poster_path") val posterPath: String,
-        val id: Int,
+        val id: String,
         @Json(name = "original_title") val originalTitle: String,
         val title: String,
         val overview: String,

@@ -1,21 +1,37 @@
 package com.wykorijnsburger.movietimes.backend.showtime
 
-import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
-import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleShowtime
-import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBClient
-import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBSearchResult
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat
+import com.wykorijnsburger.movietimes.backend.utils.toLocalDateTime
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
+import java.time.LocalDateTime
 
 @RestController
 @Component
-class ShowtimeController(val cinevilleClient: CinevilleClient) {
+class ShowtimeController(val showtimeService: ShowtimeService) {
 
     @GetMapping("/app/v1/showtimes")
-    fun getAgendaItems(): List<CinevilleShowtime> {
-        return cinevilleClient.getShowTimes(100).collectList().block()
+    fun getAgendaItems(limit: Int?, startDate: String?, endDate: String?): List<Showtime> {
+        val limitWithDefault = limit ?: 50
+
+
+        val startDateWithDefault = if (startDate != null) {
+            ISO8601DateFormat().parse(startDate).toLocalDateTime()
+        } else {
+            LocalDateTime.now()
+        }
+
+        val endDateWithDefault = if (endDate != null) {
+            ISO8601DateFormat().parse(endDate).toLocalDateTime()
+        } else {
+            startDateWithDefault.plusDays(7)
+        }
+
+        return showtimeService.getShowtimes(limit = limitWithDefault,
+                startDate = startDateWithDefault,
+                endDate = endDateWithDefault)
+                .collectList()
+                .block()
     }
 }

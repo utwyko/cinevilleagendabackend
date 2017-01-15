@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class MovietimesBackendApplication
+class ShowtimesBackendApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(MovietimesBackendApplication::class.java, *args)
+    SpringApplication.run(ShowtimesBackendApplication::class.java, *args)
 }
