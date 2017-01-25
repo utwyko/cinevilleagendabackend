@@ -8,10 +8,9 @@ import retrofit2.http.Query
 interface CinevilleService {
     @GET("shows.json")
     fun getShowtimes(@Query("query") query: String, @Query("rows") limit: Int = 10): Mono<List<CinevilleShowtime>>
-//    fun getShowtimes(@Query("query") query: String, @Query("rows") rows: String): List<CinevilleShowtime>
 
     @GET("films.json")
-    fun getFilms(@Query("query") query: String, @Query("rows") limit: Int = 10): Mono<List<CinevilleFilm>>
+    fun getFilms(@Query("query") query: String?, @Query("rows") limit: Int?): Mono<List<CinevilleFilm>>
 }
 
 data class CinevilleFilm(val id: String,

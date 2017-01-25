@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 
 @Service
 class ShowtimeService(private val cinevilleClient: CinevilleClient, private val filmService: FilmService) {
-
     fun getShowtimes(startDate: LocalDateTime,
                      endDate: LocalDateTime,
                      limit: Int = 10): Flux<Showtime> {
@@ -22,6 +21,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient, private val 
 
         return Flux.zip(showtimes, films)
                 .map { compose(it.t1, it.t2) }
+                .filter { it.filmTitle != null }
     }
 
 

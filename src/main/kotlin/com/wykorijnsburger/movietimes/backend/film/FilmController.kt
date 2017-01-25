@@ -1,16 +1,16 @@
 package com.wykorijnsburger.movietimes.backend.film
 
-import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
-import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
-import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class FilmController(val cinevilleClient: CinevilleClient) {
+class FilmController(val filmService: FilmService) {
 
     @GetMapping("app/v1/films")
-    fun getFilms(ids: Set<String>): List<CinevilleFilm> {
-        return cinevilleClient.getFilms(ids).collectList().block()
+    fun getFilms(@RequestParam id: Set<String>): List<Film>? {
+        return filmService.getFilms(id)
+                .collectList()
+                .block()
     }
 }

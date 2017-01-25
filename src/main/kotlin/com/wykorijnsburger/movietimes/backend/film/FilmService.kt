@@ -1,6 +1,7 @@
 package com.wykorijnsburger.movietimes.backend.film
 
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
+import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
 import com.wykorijnsburger.movietimes.backend.client.cineville.emptyFilm
 import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBClient
 import org.springframework.stereotype.Service
@@ -12,7 +13,8 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                   private val tmdbClient: TMDBClient) {
 
     fun getFilms(ids: List<String>): Flux<Film> {
-        val cinevilleFilms = cinevilleClient.getFilms(ids.toSet()).cache()
+        val cinevilleFilms = cinevilleClient.getFilms(ids.toSet())
+                .cache()
 
 //        val tmdbFilms: Flux<TMDBVideoResult> = cinevilleFilms.map { it.title }
 //                .flatMap { tmdbClient.searchMovie(it) }
@@ -39,11 +41,22 @@ class FilmService(private val cinevilleClient: CinevilleClient,
         }.flatMap { it.toFlux() }
 
         return paddedFilms
-                .map {
-                    Film(title = it.title,
-                            language = it.language,
-                            posterUrl = it.poster,
-                            year = it.year)
-                }
+                .map { toFilm(it) }
+    }
+
+    private fun toFilm(it: CinevilleFilm): Film {
+        return Film(title = it.title,
+                language = it.language,
+                posterUrl = it.poster,
+                year = it.year,
+                directors = it.directors.orEmpty(),
+                cast = it.cast.orEmpty(),
+                oneLiner = it.oneliner,
+                cinevilleId = it.id)
+    }
+
+    fun getFilms(ids: Set<String>): Flux<Film> {
+        return cinevilleClient.getFilms(ids)
+                .map { toFilm(it) }
     }
 }

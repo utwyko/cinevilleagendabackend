@@ -5,6 +5,7 @@ import com.wykorijnsburger.movietimes.backend.config.APIKeysSupplier
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import org.springframework.stereotype.Component
 import org.springframework.util.Base64Utils
 import reactor.core.publisher.Flux
@@ -13,13 +14,18 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import toFlux
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 @Component
 class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
     private val cinevilleService: CinevilleService
 
     init {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+
         val okHttp = OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor {
                     addApikeyInterceptor(it)
                 }.build()
@@ -36,8 +42,10 @@ class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
 
     fun getShowtimes(limit: Int = 10, startDate: LocalDateTime, endDate: LocalDateTime): Flux<CinevilleShowtime> {
 
-        val formattedStartDate = startDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        val formattedEndDate = endDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val formattedStartDate = startDate.truncatedTo(ChronoUnit.SECONDS)
+                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val formattedEndDate = endDate.truncatedTo(ChronoUnit.SECONDS)
+                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val query = "showtime:[$formattedStartDate TO $formattedEndDate]";
 
         return cinevilleService.getShowtimes(limit = limit, query = query)
@@ -45,8 +53,18 @@ class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
     }
 
     fun getFilms(ids: Set<String>): Flux<CinevilleFilm> {
-        val idQuery = '(' + ids.joinToString("+OR+") + ')'
-        return cinevilleService.getFilms("id:" + idQuery, ids.size).flatMap { it.toFlux() }
+        val query = if (ids.isEmpty()) {
+            null
+        } else {
+            ids.joinToString(prefix = "(id: ",
+                    separator = "+OR+",
+                    postfix = ")")
+        }
+
+        val limit = if (ids.isEmpty()) null else ids.size
+
+        return cinevilleService.getFilms(query, limit)
+                .flatMap { it.toFlux() }
     }
 
     private fun addApikeyInterceptor(it: Interceptor.Chain): Response? {

@@ -8,7 +8,8 @@ data class Film(val title: String,
                 val cast: List<String> = emptyList(),
                 val language: String? = null,
                 val oneLiner: String? = null,
-                val year: String? = null
+                val year: String? = null,
+                val cinevilleId : String? = null
                 ) {
     fun isEmpty(): Boolean {
         return this == emptyFilm()
