@@ -56,7 +56,7 @@ class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
         val query = if (ids.isEmpty()) {
             null
         } else {
-            ids.joinToString(prefix = "(id: ",
+            ids.joinToString(prefix = "id:( ",
                     separator = "+OR+",
                     postfix = ")")
         }

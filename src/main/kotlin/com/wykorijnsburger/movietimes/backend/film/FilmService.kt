@@ -52,7 +52,9 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                 directors = it.directors.orEmpty(),
                 cast = it.cast.orEmpty(),
                 oneLiner = it.oneliner,
-                cinevilleId = it.id)
+                cinevilleId = it.id,
+                teaser = it.teaser,
+                stillUrl = it.still)
     }
 
     fun getFilms(ids: Set<String>): Flux<Film> {
