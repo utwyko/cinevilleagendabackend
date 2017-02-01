@@ -1,6 +1,15 @@
 package com.wykorijnsburger.movietimes.backend.showtime
 
-data class Showtime(
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+
+@Entity
+data class ShowtimeRecord(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        val id: Long? = null,
         val dateTime: String,
         val filmTitle: String?,
         val filmId: String,
@@ -8,8 +17,8 @@ data class Showtime(
         val location: String) {
 }
 
-fun Showtime.toRecord(): ShowtimeRecord {
-    return ShowtimeRecord(
+fun ShowtimeRecord.toDomain(): Showtime {
+    return Showtime(
             dateTime = this.dateTime,
             filmTitle = this.filmTitle,
             filmId = this.filmId,
@@ -17,5 +26,3 @@ fun Showtime.toRecord(): ShowtimeRecord {
             location = this.location
     )
 }
-
-

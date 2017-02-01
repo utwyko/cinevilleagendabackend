@@ -28,10 +28,30 @@ class ShowtimeController(val showtimeService: ShowtimeService) {
             startDateWithDefault.plusDays(7)
         }
 
-        return showtimeService.getShowtimes(limit = limitWithDefault,
-                startDate = startDateWithDefault,
-                endDate = endDateWithDefault)
+        return showtimeService.getFromDb()
                 .collectList()
                 .block()
     }
+//
+//    @GetMapping("/app/v1/update")
+//    fun updateAgendaItems(limit: Int?, startDate: String?, endDate: String?) {
+//        val limitWithDefault = limit ?: 50
+//
+//
+//        val startDateWithDefault = if (startDate != null) {
+//            ISO8601DateFormat().parse(startDate).toLocalDateTime()
+//        } else {
+//            LocalDateTime.now()
+//        }
+//
+//        val endDateWithDefault = if (endDate != null) {
+//            ISO8601DateFormat().parse(endDate).toLocalDateTime()
+//        } else {
+//            startDateWithDefault.plusDays(7)
+//        }
+//
+//        showtimeService.updateShowtimes(limit = limitWithDefault,
+//                startDate = startDateWithDefault,
+//                endDate = endDateWithDefault)
+//    }
 }
