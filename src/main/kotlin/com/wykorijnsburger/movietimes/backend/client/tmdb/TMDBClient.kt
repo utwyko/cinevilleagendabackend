@@ -9,8 +9,7 @@ import reactor.core.publisher.Mono
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@Component
-open class TMDBClient(val apiKeysSupplier: APIKeysSupplier) {
+@Component class TMDBClient(val apiKeysSupplier: APIKeysSupplier) {
     private val tmdbService: TMDBService
 
     init {
@@ -35,7 +34,7 @@ open class TMDBClient(val apiKeysSupplier: APIKeysSupplier) {
         return tmdbService.searchMovies(query, apiKey = apiKeysSupplier.tmdb())
     }
 
-    fun getVideos(id: String): Mono<TMDBVideoResult> {
-        return tmdbService.getVideos(id, apiKey = apiKeysSupplier.tmdb())
+    fun getMovieDetailsWithVideos(id: String): Mono<TMDBDetailsResult> {
+        return tmdbService.getMovieDetailsWithVideos(id, apiKey = apiKeysSupplier.tmdb())
     }
 }

@@ -5,4 +5,3 @@ import org.springframework.data.repository.CrudRepository
 interface FilmRepository : CrudRepository<Film, Long> {
 
 }
-

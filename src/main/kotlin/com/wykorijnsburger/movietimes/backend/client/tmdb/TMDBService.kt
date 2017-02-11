@@ -1,8 +1,6 @@
 package com.wykorijnsburger.movietimes.backend.client.tmdb
 
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -11,13 +9,24 @@ interface TMDBService {
     @GET("search/movie")
     fun searchMovies(@Query("query") query: String, @Query("api_key") apiKey: String): Mono<TMDBSearchResult>
 
-    @GET("movie/{movie_id}/videos")
-    fun getVideos(@Path("movie_id") movieId: String, @Query("api_key") apiKey: String): Mono<TMDBVideoResult>
+    @GET("movie/{movie_id}?append_to_response=videos")
+    fun getMovieDetailsWithVideos(@Path("movie_id") movieId: String, @Query("api_key") apiKey: String): Mono<TMDBDetailsResult>
 }
 
-data class TMDBVideoResults(val id: String,
-                            val results: List<TMDBVideoResult>)
+data class TMDBDetailsResult(val id: String,
+                             val imdb_id: String,
+                             val runtime: String,
+                             val videos: TMDBVideosResult = TMDBVideosResult()) {
+    fun isEmpty(): Boolean {
+        return this == emptyTMDBDetails
+    }
+}
+
+val emptyTMDBDetails = TMDBDetailsResult("EMPTY", "EMPTY", "EMPTY")
+
+data class TMDBVideosResult(val results: List<TMDBVideoResult> = emptyList())
 
 data class TMDBVideoResult(val id: String,
                            val type: String,
-                           val site: String)
+                           val site: String,
+                           val key: String)

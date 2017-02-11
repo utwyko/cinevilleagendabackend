@@ -4,7 +4,6 @@ import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleShowtime
 import com.wykorijnsburger.movietimes.backend.film.FilmService
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import toFlux
@@ -21,8 +20,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
                 .map { it.toDomain() }
     }
 
-    @Scheduled(fixedDelay = 600000)
-    private fun updateShowtimes() {
+    fun updateShowtimes() {
         getShowtimes(LocalDateTime.now(), LocalDateTime.now().plusDays(8))
                 .map { it.toRecord() }
                 .collectList()

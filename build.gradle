@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.1.0-beta-22'
+        kotlinVersion = '1.1.0-beta-38'
         springBootVersion = '1.5.1.RELEASE'
     }
     repositories {
@@ -36,6 +36,7 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
@@ -59,7 +60,11 @@ dependencies {
     compile "io.projectreactor:reactor-core:3.0.4.RELEASE"
     compile "io.projectreactor:reactor-kotlin:1.0.0.BUILD-SNAPSHOT"
 
+    compile 'io.github.microutils:kotlin-logging:1.4.1'
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'org.amshove.kluent:kluent:1.14'
+    testCompile 'io.github.benas:random-beans:3.5.0'
 }
 
 task buildDocker(type: Docker) {
