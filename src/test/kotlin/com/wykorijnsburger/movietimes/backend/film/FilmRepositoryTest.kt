@@ -22,7 +22,7 @@ class FilmRepositoryTest {
     lateinit private var filmRepository: FilmRepository
 
     @Test
-    fun getFilmsFromDb() {
+    fun `should save and return films unchanged`() {
         val randomFilms = randomListOf(5, Film::class.java)
         randomFilms.forEach { entityManager.persist(it) }
 
