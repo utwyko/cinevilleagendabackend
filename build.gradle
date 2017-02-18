@@ -28,7 +28,7 @@ apply plugin: "io.spring.dependency-management"
 apply plugin: 'docker'
 
 jar {
-    baseName = 'cinevillebackend'
+    baseName = 'showtimesbackend'
     version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
