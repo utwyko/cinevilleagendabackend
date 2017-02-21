@@ -68,6 +68,10 @@ dependencies {
     testCompile 'io.github.benas:random-beans:3.5.0'
 }
 
+bootRun {
+    systemProperties System.properties
+}
+
 task buildDocker(type: Docker) {
     baseImage = 'develar/java:latest'
     push = project.hasProperty('push')
