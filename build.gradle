@@ -1,12 +1,11 @@
 buildscript {
     ext {
-        kotlinVersion = '1.1.0-rc-91'
-        springBootVersion = '1.5.1.RELEASE'
+        kotlinVersion = '1.1.1'
+        springBootVersion = '1.5.2.RELEASE'
     }
     repositories {
         mavenCentral()
         maven { url "https://repo.spring.io/milestone" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -39,7 +38,6 @@ repositories {
     jcenter()
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/snapshot" }
-    maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
 }
 
 dependencies {
@@ -59,7 +57,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
     compile "io.projectreactor:reactor-core:3.0.4.RELEASE"
-    compile "io.projectreactor:reactor-kotlin:1.0.0.BUILD-SNAPSHOT"
+    compile "io.projectreactor:reactor-kotlin:1.0.0.M1"
 
     compile 'io.github.microutils:kotlin-logging:1.4.1'
 
