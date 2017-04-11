@@ -57,7 +57,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
     compile "io.projectreactor:reactor-core:3.0.4.RELEASE"
-    compile "io.projectreactor:reactor-kotlin:1.0.0.M1"
+    compile "io.projectreactor:reactor-kotlin-extensions:1.0.0.M1"
 
     compile 'io.github.microutils:kotlin-logging:1.4.1'
 

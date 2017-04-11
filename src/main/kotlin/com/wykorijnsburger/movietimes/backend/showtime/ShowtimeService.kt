@@ -6,6 +6,7 @@ import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleShowtime
 import com.wykorijnsburger.movietimes.backend.film.FilmService
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
+import reactor.core.publisher.toFlux
 import toFlux
 import java.time.LocalDateTime
 

@@ -9,9 +9,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.springframework.stereotype.Component
 import org.springframework.util.Base64Utils
 import reactor.core.publisher.Flux
+import reactor.core.publisher.toFlux
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import toFlux
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit

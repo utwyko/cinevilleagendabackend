@@ -9,8 +9,8 @@ import com.wykorijnsburger.movietimes.backend.showtime.ShowtimeRecord
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
-import toFlux
-import toMono
+import reactor.core.publisher.toFlux
+import reactor.core.publisher.toMono
 
 @Service
 class FilmService(private val cinevilleClient: CinevilleClient,
