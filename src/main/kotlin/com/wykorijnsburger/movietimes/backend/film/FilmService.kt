@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.toFlux
 import reactor.core.publisher.toMono
+import java.time.Duration
 
 @Service
 class FilmService(private val cinevilleClient: CinevilleClient,
@@ -52,7 +53,7 @@ class FilmService(private val cinevilleClient: CinevilleClient,
         val cinevilleFilms = cinevilleClient.getFilms(ids = ids)
 
         val tmdbFilms = cinevilleFilms.map { it.title }
-                .delayMillis(500)
+                .delayElements(Duration.ofMillis(500))
                 .flatMap { tmdbClient.searchMovie(it) }
                 .flatMap {
                     val filmId = it.results.firstOrNull()?.id

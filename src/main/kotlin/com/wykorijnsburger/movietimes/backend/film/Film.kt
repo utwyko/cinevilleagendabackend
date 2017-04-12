@@ -26,7 +26,7 @@ data class Film(
         val year: String? = null,
         @Column(columnDefinition="text")
         val teaser: String? = null,
-        val runtime: String? = null
+        val runtime: Int? = null
 ) {
     fun isEmpty(): Boolean {
         return this == emptyFilm()
@@ -55,6 +55,6 @@ fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult):
             cinevilleId = cinevilleFilm.id.toInt(),
             teaser = cinevilleFilm.teaser,
             stillUrl = cinevilleFilm.still,
-            runtime =  runtime,
+            runtime =  runtime?.toInt(),
             trailerUrl = trailerUrl)
 }
