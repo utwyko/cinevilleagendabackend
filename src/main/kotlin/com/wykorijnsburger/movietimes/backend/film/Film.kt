@@ -17,9 +17,9 @@ data class Film(
         val stillUrl: String? = null,
         val trailerUrl: String? = null,
         @ElementCollection
-        val directors: List<String> = emptyList(),
+        val directors: List<String>,
         @ElementCollection
-        val cast: List<String> = emptyList(),
+        val cast: List<String>,
         val language: String? = null,
         @Column(columnDefinition="text")
         val oneLiner: String? = null,
@@ -34,7 +34,7 @@ data class Film(
 }
 
 fun emptyFilm(): Film {
-    return Film(title = "", posterUrl = "", cinevilleId = 0)
+    return Film(title = "", posterUrl = "", cinevilleId = 0, directors = emptyList(), cast = emptyList())
 }
 
 fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult): Film {

@@ -46,10 +46,10 @@ class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val formattedEndDate = endDate.truncatedTo(ChronoUnit.SECONDS)
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        val query = "showtime:[$formattedStartDate TO $formattedEndDate]";
+        val query = "showtime:[$formattedStartDate TO $formattedEndDate]"
 
         return cinevilleService.getShowtimes(limit = limit, query = query)
-                .flatMap { it.toFlux() }
+                .flatMapMany { it.toFlux() }
     }
 
     fun getFilms(ids: Set<String>): Flux<CinevilleFilm> {
@@ -64,7 +64,7 @@ class CinevilleClient(private val apiKeysSupplier: APIKeysSupplier) {
         val limit = if (ids.isEmpty()) null else ids.size
 
         return cinevilleService.getFilms(query, limit)
-                .flatMap { it.toFlux() }
+                .flatMapMany { it.toFlux() }
     }
 
     private fun addApikeyInterceptor(it: Interceptor.Chain): Response? {

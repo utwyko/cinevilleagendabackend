@@ -27,12 +27,14 @@ class FilmService(private val cinevilleClient: CinevilleClient,
 
         getFilms(filmIds)
                 .doOnError { logger.error(it) { "Error retrieving films: $it"}}
+                .map { it.toRecord() }
                 .subscribe { filmRepository.save(it) }
     }
 
     fun getFilmsFromDb(): Flux<Film> {
         return filmRepository.findAll()
                 .toFlux()
+                .map { it.toDomain() }
     }
 
     fun getCinevilleFilms(ids: List<String>): Flux<CinevilleFilm>? {
@@ -44,7 +46,7 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                     val filmMap = it.associateBy({ it.id }, { it })
                     ids.map { id -> filmMap[id] ?: emptyFilm() }
                 }
-                .flatMap { it.toFlux() }
+                .flatMapMany { it.toFlux() }
 
         return paddedFilms
     }

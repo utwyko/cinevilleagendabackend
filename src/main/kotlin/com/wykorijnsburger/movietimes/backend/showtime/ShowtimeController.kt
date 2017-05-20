@@ -5,6 +5,7 @@ import com.wykorijnsburger.movietimes.backend.utils.toLocalDateTime
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 import java.time.LocalDateTime
 
 @RestController
@@ -12,9 +13,8 @@ import java.time.LocalDateTime
 class ShowtimeController(val showtimeService: ShowtimeService) {
 
     @GetMapping("/app/v1/showtimes")
-    fun getAgendaItems(limit: Int?, startDate: String?, endDate: String?): List<Showtime> {
+    fun getAgendaItems(limit: Int?, startDate: String?, endDate: String?): Flux<Showtime> {
         val limitWithDefault = limit ?: 50
-
 
         val startDateWithDefault = if (startDate != null) {
             ISO8601DateFormat().parse(startDate).toLocalDateTime()
@@ -29,29 +29,5 @@ class ShowtimeController(val showtimeService: ShowtimeService) {
         }
 
         return showtimeService.getFromDb()
-                .collectList()
-                .block()
     }
-//
-//    @GetMapping("/app/v1/update")
-//    fun updateAgendaItems(limit: Int?, startDate: String?, endDate: String?) {
-//        val limitWithDefault = limit ?: 50
-//
-//
-//        val startDateWithDefault = if (startDate != null) {
-//            ISO8601DateFormat().parse(startDate).toLocalDateTime()
-//        } else {
-//            LocalDateTime.now()
-//        }
-//
-//        val endDateWithDefault = if (endDate != null) {
-//            ISO8601DateFormat().parse(endDate).toLocalDateTime()
-//        } else {
-//            startDateWithDefault.plusDays(7)
-//        }
-//
-//        showtimeService.updateShowtimes(limit = limitWithDefault,
-//                startDate = startDateWithDefault,
-//                endDate = endDateWithDefault)
-//    }
 }

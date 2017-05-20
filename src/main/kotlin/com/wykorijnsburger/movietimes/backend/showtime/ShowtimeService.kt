@@ -25,7 +25,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
                 .map { it.toRecord() }
                 .collectList()
                 .subscribe {
-                    showtimeRepository.save(it)
+                    showtimeRepository.saveAll(it)
                     filmService.updateFilms(it)
                 }
     }
@@ -37,7 +37,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
 
         val films = showtimes.collectList()
                 .map { it.map { it.film_id } }
-                .flatMap { filmService.getCinevilleFilms(it) }
+                .flatMapMany { filmService.getCinevilleFilms(it) }
 
         return Flux.zip(showtimes, films)
                 .map { compose(it.t1, it.t2) }
