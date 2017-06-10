@@ -1,5 +1,6 @@
 package com.wykorijnsburger.movietimes.backend.film
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
 import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBDetailsResult
 import javax.persistence.Column
@@ -9,6 +10,7 @@ import javax.persistence.Id
 
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Film(
         @Id
         val cinevilleId: Int,

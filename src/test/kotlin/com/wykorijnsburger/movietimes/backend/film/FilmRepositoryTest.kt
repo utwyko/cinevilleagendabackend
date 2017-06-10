@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.test.context.junit4.SpringRunner
 
 
-
 @RunWith(SpringRunner::class)
 @DataJpaTest
 class FilmRepositoryTest {
@@ -23,7 +22,7 @@ class FilmRepositoryTest {
 
     @Test
     fun `should save and return films unchanged`() {
-        val randomFilms = randomListOf(5, Film::class.java)
+        val randomFilms = randomListOf(5, FilmRecord::class.java)
         randomFilms.forEach { entityManager.persist(it) }
 
         val result = filmRepository.findAll()
