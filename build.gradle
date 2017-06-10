@@ -1,18 +1,17 @@
+
 buildscript {
-    ext {
-        kotlinVersion = '1.1.2-4'
-        springBootVersion = '2.0.0.M1'
-    }
+    apply from: 'dependencies.gradle'
+
     repositories {
         mavenCentral()
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$versions.springBoot")
 
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-        classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
-        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin")
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$versions.kotlin"
 
         classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
@@ -21,6 +20,7 @@ buildscript {
 plugins {
     id 'com.github.ben-manes.versions' version '0.15.0'
 }
+apply from: 'dependencies.gradle'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: "kotlin-jpa"
@@ -44,28 +44,24 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+    compile libraries.kotlinStd
+    compile libraries.reactorKotlinExtensions
+    compile libraries.kotlinLogging
 
-    compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile libraries.springStarterWebflux
+    compile libraries.springDevtools
+    compile libraries.springStarterSecurity
+    compile libraries.springStarterDataJpa
+    compile libraries.h2
 
-    compile 'org.springframework.data:spring-data-jpa'
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("com.h2database:h2")
+    compile libraries.retrofit2
+    compile libraries.retrofit2Moshi
+    compile libraries.retrofit2Reactor
+    compile libraries.okhttp3LoggingInterceptor
 
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.github.dbacinski:retrofit2-reactor-adapter:0465eed5c3'
-    compile 'com.squareup.retrofit2:converter-moshi:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-
-    compile "io.projectreactor:reactor-kotlin-extensions:1.0.0.M2"
-
-    compile 'io.github.microutils:kotlin-logging:1.4.4'
-
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile 'org.amshove.kluent:kluent:1.23'
-    testCompile 'io.github.benas:random-beans:3.6.0'
+    testCompile libraries.springStarterTest
+    testCompile libraries.kluent
+    testCompile libraries.randomBeans
 }
 
 bootRun {
