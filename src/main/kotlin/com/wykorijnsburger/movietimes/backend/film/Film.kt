@@ -23,29 +23,19 @@ data class Film(
         @ElementCollection
         val cast: List<String>,
         val language: String? = null,
-        @Column(columnDefinition="text")
+        @Column(columnDefinition = "text")
         val oneLiner: String? = null,
         val year: String? = null,
-        @Column(columnDefinition="text")
+        @Column(columnDefinition = "text")
         val teaser: String? = null,
         val runtime: Int? = null
-) {
-    fun isEmpty(): Boolean {
-        return this == emptyFilm()
-    }
-}
+)
 
-fun emptyFilm(): Film {
-    return Film(title = "", posterUrl = "", cinevilleId = 0, directors = emptyList(), cast = emptyList())
-}
-
-fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult): Film {
-    val runtime = if (tmdbDetailsResult.isEmpty()) null else tmdbDetailsResult.runtime
-
-    val trailerUrl = tmdbDetailsResult.videos.results
-            .filter { it.site.toLowerCase() == "youtube" }
-            .map { "https://www.youtube.com/watch?v=${it.key}" }
-            .firstOrNull()
+fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult?): Film {
+    val trailerUrl = tmdbDetailsResult?.videos?.results
+            ?.filter { it.site.toLowerCase() == "youtube" }
+            ?.map { "https://www.youtube.com/watch?v=${it.key}" }
+            ?.firstOrNull()
 
     return Film(title = cinevilleFilm.title,
             language = cinevilleFilm.language,
@@ -57,6 +47,6 @@ fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult):
             cinevilleId = cinevilleFilm.id.toInt(),
             teaser = cinevilleFilm.teaser,
             stillUrl = cinevilleFilm.still,
-            runtime =  runtime?.toInt(),
+            runtime = tmdbDetailsResult?.runtime?.toInt(),
             trailerUrl = trailerUrl)
 }

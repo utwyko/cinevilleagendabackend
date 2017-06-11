@@ -4,6 +4,7 @@ import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleShowtime
 import com.wykorijnsburger.movietimes.backend.film.FilmService
+import com.wykorijnsburger.movietimes.backend.utils.orNull
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.toFlux
@@ -35,21 +36,20 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
                              limit: Int = 10000): Flux<Showtime> {
         val showtimes = cinevilleClient.getShowtimes(limit, startDate, endDate)
 
-        val films = showtimes.collectList()
-                .map { it.map { it.film_id } }
+        val films = showtimes
+                .map { it.film_id }
+                .collectList()
                 .flatMapMany { filmService.getCinevilleFilms(it) }
 
         return Flux.zip(showtimes, films)
-                .map { compose(it.t1, it.t2) }
+                .map { compose(it.t1, it.t2.orNull()) }
                 .filter { it.filmTitle != null }
     }
 
-    private fun compose(cinevilleShowtime: CinevilleShowtime, film: CinevilleFilm): Showtime {
-        val nullableFilm: CinevilleFilm? = if (film.isEmpty()) null else film
-
+    private fun compose(cinevilleShowtime: CinevilleShowtime, film: CinevilleFilm?): Showtime {
         return Showtime(dateTime = cinevilleShowtime.showtime,
-                filmTitle = nullableFilm?.title,
-                posterUrl = nullableFilm?.poster,
+                filmTitle = film?.title,
+                posterUrl = film?.poster,
                 filmId = cinevilleShowtime.film_id,
                 location = cinevilleShowtime.location)
     }

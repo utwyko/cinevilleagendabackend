@@ -2,16 +2,18 @@ package com.wykorijnsburger.movietimes.backend.film
 
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleClient
 import com.wykorijnsburger.movietimes.backend.client.cineville.CinevilleFilm
-import com.wykorijnsburger.movietimes.backend.client.cineville.emptyFilm
 import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBClient
-import com.wykorijnsburger.movietimes.backend.client.tmdb.emptyTMDBDetails
+import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBDetailsResult
+import com.wykorijnsburger.movietimes.backend.client.tmdb.TMDBSearchResult
 import com.wykorijnsburger.movietimes.backend.showtime.ShowtimeRecord
+import com.wykorijnsburger.movietimes.backend.utils.orNull
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
-import reactor.core.publisher.toMono
 import java.time.Duration
+import java.util.*
 
 @Service
 class FilmService(private val cinevilleClient: CinevilleClient,
@@ -26,7 +28,7 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                 .toSet()
 
         getFilms(filmIds)
-                .doOnError { logger.error(it) { "Error retrieving films: $it"}}
+                .doOnError { logger.error(it) { "Error retrieving films: $it" } }
                 .map { it.toRecord() }
                 .subscribe { filmRepository.save(it) }
     }
@@ -37,36 +39,35 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                 .map { it.toDomain() }
     }
 
-    fun getCinevilleFilms(ids: List<String>): Flux<CinevilleFilm>? {
-        val cinevilleFilms = cinevilleClient.getFilms(ids.toSet())
-                .cache()
-
-        val paddedFilms = cinevilleFilms.collectList()
+    fun getCinevilleFilms(ids: List<String>): Flux<Optional<CinevilleFilm>> {
+        return cinevilleClient.getFilms(ids.toSet())
+                .collectList()
                 .map {
                     val filmMap = it.associateBy({ it.id }, { it })
-                    ids.map { id -> filmMap[id] ?: emptyFilm() }
+
+                    ids.map { id -> Optional.ofNullable(filmMap[id]) }
                 }
                 .flatMapMany { it.toFlux() }
-
-        return paddedFilms
     }
 
     private fun getFilms(ids: Set<String>): Flux<Film> {
         val cinevilleFilms = cinevilleClient.getFilms(ids = ids)
+                .cache()
 
-        val tmdbFilms = cinevilleFilms.map { it.title }
+        val tmdbFilms: Flux<Optional<TMDBDetailsResult>> = cinevilleFilms.map { it.title }
                 .delayElements(Duration.ofMillis(500))
-                .flatMap { tmdbClient.searchMovie(it) }
+                .flatMap<TMDBSearchResult> { tmdbClient.searchMovie(it) }
                 .flatMap {
-                    val filmId = it.results.firstOrNull()?.id
-                    if (filmId != null) {
-                        tmdbClient.getMovieDetailsWithVideos(filmId)
+                    val id = it.results.firstOrNull()?.id
+                    if (id != null) {
+                        tmdbClient.getMovieDetailsWithVideos(id)
+                                .map { Optional.ofNullable(it) }
                     } else {
-                        emptyTMDBDetails.toMono()
+                        Mono.just(Optional.empty<TMDBDetailsResult>())
                     }
                 }
 
         return Flux.zip(cinevilleFilms, tmdbFilms)
-                .map { compose(it.t1, it.t2) }
+                .map { compose(it.t1, it.t2.orNull()) }
     }
 }

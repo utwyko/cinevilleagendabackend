@@ -17,12 +17,7 @@ data class TMDBDetailsResult(val id: String,
                              val imdb_id: String,
                              val runtime: String,
                              val videos: TMDBVideosResult = TMDBVideosResult()) {
-    fun isEmpty(): Boolean {
-        return this == emptyTMDBDetails
-    }
 }
-
-val emptyTMDBDetails = TMDBDetailsResult("EMPTY", "EMPTY", "EMPTY")
 
 data class TMDBVideosResult(val results: List<TMDBVideoResult> = emptyList())
 

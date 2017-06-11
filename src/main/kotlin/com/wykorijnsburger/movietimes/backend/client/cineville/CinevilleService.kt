@@ -28,13 +28,4 @@ data class CinevilleFilm(val id: String,
                          val countries: List<String>,
                          val cast: List<String>,
                          val language: String,
-                         val teaser: String? = null) {
-    fun isEmpty(): Boolean {
-        return this == emptyFilm()
-    }
-}
-
-fun emptyFilm(): CinevilleFilm {
-    return CinevilleFilm("", "", "", "", "", "", "", "", "", "", emptyList(), emptyList(), emptyList(), emptyList(), "")
-}
-
+                         val teaser: String? = null)
