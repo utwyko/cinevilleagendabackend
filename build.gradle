@@ -45,6 +45,7 @@ repositories {
 
 dependencies {
     compile libraries.kotlinStd
+    compile libraries.reactorKotlinExtensions
     compile libraries.kotlinLogging
 
     compile libraries.springStarterWebflux
