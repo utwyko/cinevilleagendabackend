@@ -1,19 +1,18 @@
 ext.versions = [
-        kotlin                 : '1.1.2-4',
+        kotlin                 : '1.1.2-5',
         reactorKotlinExtensions: '1.0.0.M2',
-        kotlinLogging          : '1.4.4',
+        kotlinLogging          : '1.4.5',
 
-        springBoot             : '2.0.0.M1',
+        springBoot             : '2.0.0.M2',
 
         retrofit               : '2.3.0',
 
         kluent                 : '1.23',
-        randomBeans            : '3.6.0'
+        randomBeans            : '3.7.0'
 ]
 
 ext.libraries = [
         kotlinStd                 : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
-        reactorKotlinExtensions   : "io.projectreactor:reactor-kotlin-extensions:$versions.reactorKotlinExtensions",
         kotlinLogging             : "io.github.microutils:kotlin-logging:$versions.kotlinLogging",
 
         springStarterWebflux      : "org.springframework.boot:spring-boot-starter-webflux",
@@ -27,7 +26,7 @@ ext.libraries = [
         retrofit2                 : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         retrofit2Moshi            : "com.squareup.retrofit2:converter-moshi:$versions.retrofit",
         retrofit2Reactor          : "com.github.dbacinski:retrofit2-reactor-adapter:0465eed5c3",
-        okhttp3LoggingInterceptor : "com.squareup.okhttp3:logging-interceptor:3.8.0",
+        okhttp3LoggingInterceptor : "com.squareup.okhttp3:logging-interceptor:3.8.1",
 
         kluent                    : "org.amshove.kluent:kluent:$versions.kluent",
         randomBeans               : "io.github.benas:random-beans:$versions.randomBeans"

@@ -29,21 +29,21 @@ class FilmIT {
     fun `should include all film fields`() {
         val randomFilms = EnhancedRandom.randomListOf(5, FilmRecord::class.java)
         randomFilms.forEach { filmRepository.save(it) }
-        val exchange = webTestClient.get()
+        webTestClient.get()
                 .uri("/app/v1/films")
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()
-                    .jsonPath("$.length()").isEqualTo(5)
-                    .jsonPath("$.[0].cinevilleId").exists()
-                    .jsonPath("$.[0].title").exists()
-                    .jsonPath("$.[0].posterUrl").exists()
-                    .jsonPath("$.[0].stillUrl").exists()
-                    .jsonPath("$.[0].trailerUrl").exists()
-                    .jsonPath("$.[0].language").exists()
-                    .jsonPath("$.[0].oneLiner").exists()
-                    .jsonPath("$.[0].year").exists()
-                    .jsonPath("$.[0].teaser").exists()
-                    .jsonPath("$.[0].runtime").exists()
+                .jsonPath("$.length()").isEqualTo(5)
+                .jsonPath("$.[0].cinevilleId").exists()
+                .jsonPath("$.[0].title").exists()
+                .jsonPath("$.[0].posterUrl").exists()
+                .jsonPath("$.[0].stillUrl").exists()
+                .jsonPath("$.[0].trailerUrl").exists()
+                .jsonPath("$.[0].language").exists()
+                .jsonPath("$.[0].oneLiner").exists()
+                .jsonPath("$.[0].year").exists()
+                .jsonPath("$.[0].teaser").exists()
+                .jsonPath("$.[0].runtime").exists()
     }
 }
