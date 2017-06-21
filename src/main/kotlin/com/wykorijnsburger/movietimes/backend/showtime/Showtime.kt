@@ -5,8 +5,7 @@ data class Showtime(
         val filmTitle: String?,
         val filmId: String,
         val posterUrl: String?,
-        val location: String) {
-}
+        val location: String)
 
 fun Showtime.toRecord(): ShowtimeRecord {
     return ShowtimeRecord(

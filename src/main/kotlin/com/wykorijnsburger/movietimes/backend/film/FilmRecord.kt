@@ -1,7 +1,6 @@
 package com.wykorijnsburger.movietimes.backend.film
 
 import javax.persistence.Column
-import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.Id
 

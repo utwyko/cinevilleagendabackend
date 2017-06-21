@@ -16,8 +16,7 @@ interface TMDBService {
 data class TMDBDetailsResult(val id: String,
                              val imdb_id: String,
                              val runtime: String,
-                             val videos: TMDBVideosResult = TMDBVideosResult()) {
-}
+                             val videos: TMDBVideosResult = TMDBVideosResult())
 
 data class TMDBVideosResult(val results: List<TMDBVideoResult> = emptyList())
 

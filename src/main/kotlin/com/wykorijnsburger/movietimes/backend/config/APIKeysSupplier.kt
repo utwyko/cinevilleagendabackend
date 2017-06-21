@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "apikey")
-class APIKeysSupplier() {
+class APIKeysSupplier {
 
     private var tmdb: String = ""
     private var cineville: String = ""
