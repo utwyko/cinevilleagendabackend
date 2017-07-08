@@ -26,6 +26,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
                 .map { it.toRecord() }
                 .collectList()
                 .subscribe {
+                    showtimeRepository.deleteAll()
                     showtimeRepository.saveAll(it)
                     filmService.updateFilms(it)
                 }

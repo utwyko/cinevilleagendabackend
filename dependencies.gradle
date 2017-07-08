@@ -1,5 +1,5 @@
 ext.versions = [
-        kotlin                 : '1.1.2-5',
+        kotlin                 : '1.1.3-2',
         // TODO : Remove once this has been merged to main reactor project
         reactorKotlinExtensions: '1.0.0.M2',
         kotlinLogging          : '1.4.5',
@@ -8,7 +8,7 @@ ext.versions = [
 
         retrofit               : '2.3.0',
 
-        kluent                 : '1.23',
+        kluent                 : '1.24',
         randomBeans            : '3.7.0'
 ]
 
