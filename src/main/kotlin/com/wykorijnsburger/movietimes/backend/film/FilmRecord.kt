@@ -7,7 +7,7 @@ import javax.persistence.Id
 @Entity
 data class FilmRecord(
         @Id
-        val cinevilleId: Int,
+        val cinevilleId: Long,
         val title: String,
         val posterUrl: String? = null,
         val stillUrl: String? = null,

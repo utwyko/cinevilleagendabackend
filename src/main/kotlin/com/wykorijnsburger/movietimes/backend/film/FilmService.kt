@@ -30,10 +30,17 @@ class FilmService(private val cinevilleClient: CinevilleClient,
         getFilms(filmIds)
                 .doOnError { logger.error(it) { "Error retrieving films: $it" } }
                 .map { it.toRecord() }
-                .subscribe {
-                    filmRepository.deleteById(it.cinevilleId.toLong())
-                    filmRepository.save(it)
-                }
+                .subscribe(
+                        {
+                            val filmExistsInDB = filmRepository.existsById(it.cinevilleId)
+                            if (filmExistsInDB) {
+                                filmRepository.deleteById(it.cinevilleId)
+                            }
+                            filmRepository.save(it)
+                        }, {
+                            logger.error { "Error saving film to DB: $it" }
+                        }
+                )
     }
 
     fun getFilmsFromDb(): Flux<Film> {

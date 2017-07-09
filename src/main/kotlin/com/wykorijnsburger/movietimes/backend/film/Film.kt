@@ -9,24 +9,17 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 
-@Entity
-@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Film(
-        @Id
-        val cinevilleId: Int,
+        val cinevilleId: Long,
         val title: String,
         val posterUrl: String? = null,
         val stillUrl: String? = null,
         val trailerUrl: String? = null,
-        @ElementCollection
         val directors: List<String>,
-        @ElementCollection
         val cast: List<String>,
         val language: String? = null,
-        @Column(columnDefinition = "text")
         val oneLiner: String? = null,
         val year: String? = null,
-        @Column(columnDefinition = "text")
         val teaser: String? = null,
         val runtime: Int? = null
 )
@@ -44,7 +37,7 @@ fun compose(cinevilleFilm: CinevilleFilm, tmdbDetailsResult: TMDBDetailsResult?)
             directors = cinevilleFilm.directors.orEmpty(),
             cast = cinevilleFilm.cast.orEmpty(),
             oneLiner = cinevilleFilm.oneliner,
-            cinevilleId = cinevilleFilm.id.toInt(),
+            cinevilleId = cinevilleFilm.id.toLong(),
             teaser = cinevilleFilm.teaser,
             stillUrl = cinevilleFilm.still,
             runtime = tmdbDetailsResult?.runtime?.toInt(),
