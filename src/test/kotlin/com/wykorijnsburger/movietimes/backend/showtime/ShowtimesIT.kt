@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.web.reactive.server.WebTestClient
 
 @RunWith(SpringRunner::class)
 @ActiveProfiles("test")
@@ -21,20 +22,24 @@ class ShowtimesIT {
     lateinit private var showtimesRepository: ShowtimeRepository
 
     @Autowired
-    lateinit private var testRestTemplate: TestRestTemplate
+    lateinit private var webTestClient: WebTestClient
 
     @Test
     fun `should include all film fields`() {
         val randomShowtimes = EnhancedRandom.randomListOf(5, ShowtimeRecord::class.java)
         randomShowtimes.forEach { showtimesRepository.save(it) }
 
-        val result = JsonPath.parse(testRestTemplate.getForObject("/app/v1/showtimes", String::class.java))
-
-        result.read<Int>("$.length()") `should equal to` 5
-        result.read<Int>("$.[0].dateTime") `should not equal` null
-        result.read<String>("$.[0].filmTitle") `should not equal` null
-        result.read<String>("$.[0].filmId") `should not equal` null
-        result.read<String>("$.[0].posterUrl") `should not equal` null
-        result.read<String>("$.[0].location") `should not equal` null
+        webTestClient.get()
+                .uri("/app/v1/showtimes")
+                .header("apikey", "test")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(5)
+                .jsonPath("$.[0].dateTime").exists()
+                .jsonPath("$.[0].filmTitle").exists()
+                .jsonPath("$.[0].filmId").exists()
+                .jsonPath("$.[0].posterUrl").exists()
+                .jsonPath("$.[0].location").exists()
     }
 }

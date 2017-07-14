@@ -9,6 +9,7 @@ class APIKeysSupplier {
 
     private var tmdb: String = ""
     private var cineville: String = ""
+    private var android: String = ""
 
     fun tmdb(): String {
         return this.tmdb
@@ -26,8 +27,17 @@ class APIKeysSupplier {
         this.cineville = value
     }
 
+    fun android(): String {
+        return this.android
+    }
+
+    fun setAndroid(value: String) {
+        this.android = value
+    }
+
     init {
         this.tmdb = ""
         this.cineville = ""
+        this.android = ""
     }
 }

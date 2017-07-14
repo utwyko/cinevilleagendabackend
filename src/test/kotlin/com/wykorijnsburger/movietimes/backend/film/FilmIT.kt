@@ -29,8 +29,10 @@ class FilmIT {
     fun `should include all film fields`() {
         val randomFilms = EnhancedRandom.randomListOf(5, FilmRecord::class.java)
         randomFilms.forEach { filmRepository.save(it) }
+
         webTestClient.get()
                 .uri("/app/v1/films")
+                .header("apikey", "test")
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()
