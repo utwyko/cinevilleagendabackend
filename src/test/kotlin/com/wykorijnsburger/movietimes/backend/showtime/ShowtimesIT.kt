@@ -30,7 +30,7 @@ class ShowtimesIT {
         randomShowtimes.forEach { showtimesRepository.save(it) }
 
         webTestClient.get()
-                .uri("/app/v1/showtimes")
+                .uri("/app/v1/showtimes?apikey=test")
                 .header("apikey", "test")
                 .exchange()
                 .expectStatus().isOk
