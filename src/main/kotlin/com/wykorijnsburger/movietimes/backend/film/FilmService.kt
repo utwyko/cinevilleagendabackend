@@ -65,7 +65,7 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                 .cache()
 
         val tmdbFilms: Flux<Optional<TMDBDetailsResult>> = cinevilleFilms.map { it.title }
-                .delayElements(Duration.ofMillis(500))
+                .delayElements(Duration.ofMillis(1000))
                 .flatMap<TMDBSearchResult> { tmdbClient.searchMovie(it) }
                 .flatMap {
                     val id = it.results.firstOrNull()?.id

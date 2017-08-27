@@ -1,23 +1,22 @@
 package com.wykorijnsburger.movietimes.backend.client.tmdb
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
 
 data class TMDBMovie(
-        @Json(name = "poster_path") val posterPath: String,
+        @JsonProperty("poster_path") val posterPath: String?,
         val id: String,
-        @Json(name = "original_title") val originalTitle: String,
+        @JsonProperty( "original_title") val originalTitle: String?,
         val title: String,
         val overview: String,
-        @Json(name = "release_date") val releaseDate: String,
+        @JsonProperty("release_date") val releaseDate: String?,
 
         val adult: Boolean,
-        @Json(name = "genre_ids") val genreIds: List<String>,
-        @Json(name = "original_language") val originalLanguage: String,
+        @JsonProperty("genre_ids") val genreIds: List<String>,
+        @JsonProperty("original_language") val originalLanguage: String,
         val popularity: Double,
 
-        @Json(name = "backdrop_path") val backdropPath: String?,
-        @Json(name = "video") val hasVideo: Boolean,
+        @JsonProperty("backdrop_path") val backdropPath: String?,
+        @JsonProperty("video") val hasVideo: Boolean,
 
-        val voteCount: Int,
-        @Json(name = "vote_average") val voteAverage: Double
+        @JsonProperty("vote_average") val voteAverage: Double
 )

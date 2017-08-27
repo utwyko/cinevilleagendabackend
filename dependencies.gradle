@@ -1,21 +1,20 @@
 ext.versions = [
-        kotlin                 : '1.1.3-2',
-        // TODO : Remove once this has been merged to main reactor project
-        reactorKotlinExtensions: '1.0.0.M2',
-        kotlinLogging          : '1.4.5',
+        kotlin       : '1.1.4-2',
+        kotlinLogging: '1.4.5',
 
-        springBoot             : '2.0.0.M2',
+        springBoot   : '2.0.0.M3',
 
-        retrofit               : '2.3.0',
+        retrofit     : '2.3.0',
 
-        kluent                 : '1.24',
-        randomBeans            : '3.7.0'
+        kluent       : '1.26',
+        randomBeans  : '3.7.0',
+
+        jacksonKotlin : '2.9.0'
 ]
 
 ext.libraries = [
-        kotlinStd                : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
-        kotlinReflect                : "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
-        reactorKotlinExtensions  : "io.projectreactor:reactor-kotlin-extensions:$versions.reactorKotlinExtensions",
+        kotlinStd                : "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin",
+        kotlinReflect            : "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
         kotlinLogging            : "io.github.microutils:kotlin-logging:$versions.kotlinLogging",
 
         springStarterWebflux     : "org.springframework.boot:spring-boot-starter-webflux",
@@ -32,6 +31,8 @@ ext.libraries = [
         okhttp3LoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:3.8.1",
 
         kluent                   : "org.amshove.kluent:kluent:$versions.kluent",
-        randomBeans              : "io.github.benas:random-beans:$versions.randomBeans"
+        randomBeans              : "io.github.benas:random-beans:$versions.randomBeans",
+
+        jacksonKotlin            : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jacksonKotlin"
 ]
 

@@ -39,14 +39,12 @@ repositories {
     mavenCentral()
     jcenter()
     mavenLocal()
-    maven { url 'https://jitpack.io' }
     maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
     compile libraries.kotlinStd
     compile libraries.kotlinReflect
-    compile libraries.reactorKotlinExtensions
     compile libraries.kotlinLogging
 
     compile libraries.springStarterWebflux
@@ -55,10 +53,7 @@ dependencies {
     compile libraries.springStarterDataJpa
     compile libraries.h2
 
-    compile libraries.retrofit2
-    compile libraries.retrofit2Moshi
-    compile libraries.retrofit2Reactor
-    compile libraries.okhttp3LoggingInterceptor
+    compile libraries.jacksonKotlin
 
     testCompile libraries.springStarterTest
     testCompile libraries.kluent
