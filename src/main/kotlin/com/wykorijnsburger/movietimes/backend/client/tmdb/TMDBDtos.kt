@@ -3,7 +3,7 @@ package com.wykorijnsburger.movietimes.backend.client.tmdb
 
 data class TMDBDetailsResult(val id: String,
                              val imdb_id: String,
-                             val runtime: String,
+                             val runtime: String?,
                              val videos: TMDBVideosResult = TMDBVideosResult())
 
 data class TMDBVideosResult(val results: List<TMDBVideoResult> = emptyList())
