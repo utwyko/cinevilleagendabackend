@@ -8,6 +8,8 @@ import com.wykorijnsburger.movietimes.backend.utils.orNull
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.toFlux
+import reactor.util.function.component1
+import reactor.util.function.component2
 import java.time.LocalDateTime
 
 @Service
@@ -35,7 +37,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
     private fun getShowtimes(startDate: LocalDateTime,
                              endDate: LocalDateTime,
                              limit: Int = 10000): Flux<Showtime> {
-        val showtimes = cinevilleClient.getShowtimes(limit, startDate, endDate)
+        val showtimes = cinevilleClient.getShowtimes(limit, startDate, endDate).cache()
 
         val films = showtimes
                 .map { it.film_id }
@@ -43,7 +45,7 @@ class ShowtimeService(private val cinevilleClient: CinevilleClient,
                 .flatMapMany { filmService.getCinevilleFilms(it) }
 
         return Flux.zip(showtimes, films)
-                .map { compose(it.t1, it.t2.orNull()) }
+                .map { (showtime, film) -> compose(showtime, film.orNull()) }
                 .filter { it.filmTitle != null }
     }
 

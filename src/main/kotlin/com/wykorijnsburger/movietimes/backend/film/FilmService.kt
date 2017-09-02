@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
+import reactor.util.function.component1
+import reactor.util.function.component2
 import java.time.Duration
 import java.util.*
 
@@ -57,7 +59,7 @@ class FilmService(private val cinevilleClient: CinevilleClient,
 
                     ids.map { id -> Optional.ofNullable(filmMap[id]) }
                 }
-                .flatMapMany { it.toFlux() }
+                .flatMapIterable { it }
     }
 
     private fun getFilms(ids: Set<String>): Flux<Film> {
@@ -78,6 +80,6 @@ class FilmService(private val cinevilleClient: CinevilleClient,
                 }
 
         return Flux.zip(cinevilleFilms, tmdbFilms)
-                .map { compose(it.t1, it.t2.orNull()) }
+                .map { (cinevilleFilm, tmdbFilm) -> compose(cinevilleFilm, tmdbFilm.orNull()) }
     }
 }
