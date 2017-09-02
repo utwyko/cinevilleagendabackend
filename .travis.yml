@@ -3,13 +3,12 @@ jdk:
 - oraclejdk8
 deploy:
   provider: heroku
-  api-key:
-    - secure: "$HEROKU_API_KEY"
   app: showtimesbackend
-
+  api_key:
+    secure: A7XTHWBF2A4TS4IOEhPD1o6rWvnOspPF7iXv8hiDn/Z0LY1wqvEpAqsJxJWbpTLcbXoCUGiqiBCmgJP+mUSSsZXNS6CQyZg3znjSzvfHUifdEnNz1ORp7O6ZvOKGvgKIGD8x6xnKXUbOH3aOenhVqlb5s45bu4944JEG+5oX84mQGWSI+DKMS1ZZ7A06XEwhJmhMP6TPO/zjjuW/6MM028Ti/sRqwzvWE1lbKVSYE2xh9xiyKHdn0uYXq262QTKVR3T6nUs3jThrDoElV8U5CDWJR1cxuyNzIpJ29l81osyDiYRKfFGNa7fHkJc5vdqBg/zvPpfv6Kd8SIf2a6ZzrJPlXmifjCkovEcFVVebMWwUDSqKumQmcQRCFs7ppeCDFj3NETEH2kp5O/EeqZ4tKigT81RFkYQqgenaMe/MrM/3mqnOqTp8SezCW8/P5h/R3VfjuLhqIyiVl1k4Z38oIH/tjLdweIklyYIdgY0qpVXniCWkLmuog87HDLV/0lGA90F0MZsMiPfHnXd4HWE1h9PzQfmmSFYvD5lS/CQLM0IG4KTY2hxRz0FK/NFsyy7jI2adlXsDGOOdhJn8uaNzM3FOlacDhcZpX8MeRKUnI4oy1Cf5tWRtoppusoC6R8WlQabvmuUkPUJYNU6j2qBWvaG5DfJoKG23lfp0E2HH24U=
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - "$HOME/.gradle/caches/"
