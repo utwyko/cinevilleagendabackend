@@ -31,7 +31,8 @@ class FilmIT {
         randomFilms.forEach { filmRepository.save(it) }
 
         webTestClient.get()
-                .uri("/app/v1/films?apikey=test")
+                .uri("/app/v1/films")
+                .header("apikey", "test")
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()

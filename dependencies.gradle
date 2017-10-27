@@ -1,15 +1,15 @@
 ext.versions = [
         kotlin       : '1.1.51',
-        kotlinLogging: '1.4.5',
+        kotlinLogging: '1.4.6',
 
-        springBoot   : '2.0.0.M4',
+        springBoot   : '2.0.0.M5',
 
         retrofit     : '2.3.0',
 
-        kluent       : '1.26',
+        kluent       : '1.30',
         randomBeans  : '3.7.0',
 
-        jacksonKotlin : '2.9.0'
+        jacksonKotlin : '2.9.2'
 ]
 
 ext.libraries = [
@@ -19,7 +19,6 @@ ext.libraries = [
 
         springStarterWebflux     : "org.springframework.boot:spring-boot-starter-webflux",
         springDevtools           : "org.springframework.boot:spring-boot-devtools",
-        springStarterSecurity    : "org.springframework.boot:spring-boot-starter-security",
         springStarterDataJpa     : "org.springframework.boot:spring-boot-starter-data-jpa",
         springStarterTest        : "org.springframework.boot:spring-boot-starter-test",
 

@@ -18,7 +18,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.ben-manes.versions' version '0.15.0'
+    id 'com.github.ben-manes.versions' version '0.17.0'
 }
 apply from: 'dependencies.gradle'
 apply plugin: 'kotlin'
@@ -49,7 +49,6 @@ dependencies {
 
     compile libraries.springStarterWebflux
     compile libraries.springDevtools
-    compile libraries.springStarterSecurity
     compile libraries.springStarterDataJpa
     compile libraries.h2
 
@@ -58,10 +57,6 @@ dependencies {
     testCompile libraries.springStarterTest
     testCompile libraries.kluent
     testCompile libraries.randomBeans
-}
-
-bootRun {
-    systemProperties System.properties
 }
 
 task buildDocker(type: Docker) {
