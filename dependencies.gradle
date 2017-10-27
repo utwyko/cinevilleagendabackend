@@ -1,8 +1,8 @@
 ext.versions = [
-        kotlin       : '1.1.4-2',
+        kotlin       : '1.1.51',
         kotlinLogging: '1.4.5',
 
-        springBoot   : '2.0.0.M3',
+        springBoot   : '2.0.0.M4',
 
         retrofit     : '2.3.0',
 

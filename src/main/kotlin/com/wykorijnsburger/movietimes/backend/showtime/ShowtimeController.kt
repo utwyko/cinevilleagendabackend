@@ -6,7 +6,6 @@ import com.wykorijnsburger.movietimes.backend.utils.toLocalDateTime
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import java.time.LocalDateTime
@@ -16,7 +15,7 @@ import java.time.LocalDateTime
 class ShowtimeController(val showtimeService: ShowtimeService, val apiKeysSupplier: APIKeysSupplier) {
 
     @GetMapping("/app/v1/showtimes")
-    fun getAgendaItems(@RequestParam apikey: String, limit: Int?, startDate: String?, endDate: String?): Flux<Showtime>? {
+    fun getAgendaItems(@RequestHeader apikey: String, limit: Int?, startDate: String?, endDate: String?): Flux<Showtime>? {
         if (apikey != apiKeysSupplier.android()) {
             // TODO: Status code, error response
             return null
