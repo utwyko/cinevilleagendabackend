@@ -30,7 +30,7 @@ class ShowtimesIT {
         randomShowtimes.forEach { showtimesRepository.save(it) }
 
         webTestClient.get()
-                .uri("/app/v1/showtimes?apikey=test")
+                .uri("/app/v1/showtimes")
                 .header("apikey", "test")
                 .exchange()
                 .expectStatus().isOk
@@ -41,5 +41,14 @@ class ShowtimesIT {
                 .jsonPath("$.[0].filmId").exists()
                 .jsonPath("$.[0].posterUrl").exists()
                 .jsonPath("$.[0].location").exists()
+    }
+
+    @Test
+    fun `Should return unauthorized on invalid apikey`() {
+        webTestClient.get()
+                .uri("/app/v1/showtimes")
+                .header("apikey", "INVALID")
+                .exchange()
+                .expectStatus().isUnauthorized
     }
 }

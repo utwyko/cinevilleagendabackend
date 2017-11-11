@@ -1,15 +1,11 @@
 package com.wykorijnsburger.movietimes.backend.film
 
-import com.jayway.jsonpath.JsonPath
 import io.github.benas.randombeans.api.EnhancedRandom
-import org.amshove.kluent.`should equal to`
-import org.amshove.kluent.`should not equal`
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
-import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -26,7 +22,7 @@ class FilmIT {
     lateinit private var webTestClient: WebTestClient
 
     @Test
-    fun `should include all film fields`() {
+    fun `Should include all film fields`() {
         val randomFilms = EnhancedRandom.randomListOf(5, FilmRecord::class.java)
         randomFilms.forEach { filmRepository.save(it) }
 
@@ -47,5 +43,14 @@ class FilmIT {
                 .jsonPath("$.[0].year").exists()
                 .jsonPath("$.[0].teaser").exists()
                 .jsonPath("$.[0].runtime").exists()
+    }
+
+    @Test
+    fun `Should return unauthorized on invalid apikey`() {
+        webTestClient.get()
+                .uri("/app/v1/films")
+                .header("apikey", "INVALID")
+                .exchange()
+                .expectStatus().isUnauthorized
     }
 }
