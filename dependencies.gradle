@@ -1,15 +1,15 @@
 ext.versions = [
-        kotlin       : '1.1.51',
-        kotlinLogging: '1.4.6',
+        kotlin       : '1.2.10',
+        kotlinLogging: '1.4.8',
 
-        springBoot   : '2.0.0.M6',
+        springBoot   : '2.0.0.M7',
 
         retrofit     : '2.3.0',
 
-        kluent       : '1.30',
+        kluent       : '1.32',
         randomBeans  : '3.7.0',
 
-        jacksonKotlin : '2.9.2'
+        jacksonKotlin : '2.9.3'
 ]
 
 ext.libraries = [
